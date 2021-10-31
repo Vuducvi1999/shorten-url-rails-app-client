@@ -41,11 +41,16 @@ function ShortenUrlItem({origin_url, shorten_url, clicked, created_at, updated_a
     const alias = getAliasFromShortenURL(shorten_url)
     dispatch(deleteUrlLink(authentication.token, alias))
   }
+  const convertUrlReadable = value => {
+    if(value.length > 60)
+      return value.slice(0, 60) + '...'
+    return value
+  }
   
   return (
     <div className="mb-2">
       <div className='p-3 alert-info text-black d-flex justify-content-between align-items-center'>
-        <span className="overflow-hidden">{origin_url}</span>
+        <span className="overflow-hidden">{convertUrlReadable(origin_url)}</span>
         <span className="small">
           <span className="cursor-pointer small ps-3" onClick={toggleAction}>{textTransfer}</span>
         </span>
@@ -55,7 +60,7 @@ function ShortenUrlItem({origin_url, shorten_url, clicked, created_at, updated_a
           <tbody className=''>
             <tr className=''>
               <td>Origin</td>
-              <td className='overflow-hidden '>{origin_url}</td>
+              <td className='overflow-hidden '>{convertUrlReadable(origin_url)}</td>
               <td className='d-flex flex-row-reverse px-0' onClick={copyURL(origin_url)}>
                 <i className="cursor-pointer fa fa-clipboard p-1 bg-secondary bg-opacity-50"></i>
               </td>
@@ -73,11 +78,11 @@ function ShortenUrlItem({origin_url, shorten_url, clicked, created_at, updated_a
             </tr>
             <tr>
               <td>Created</td>
-              <td>{created_at}</td>
+              <td>{new Date(created_at).toLocaleString()}</td>
             </tr>
             <tr>
               <td>Updated</td>
-              <td>{updated_at}</td>
+              <td>{new Date(updated_at).toLocaleString()}</td>
             </tr>
           </tbody>
         </table>
