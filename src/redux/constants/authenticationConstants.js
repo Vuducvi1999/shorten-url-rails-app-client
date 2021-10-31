@@ -1,0 +1,8 @@
+
+export const FETCHING_TOKEN = 'SIGN_IN_LOADING'
+export const FETCH_TOKEN_FAIL = 'FETCH_TOKEN_FAIL'
+export const FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS'
+export const REMOVE_TOKEN = 'REMOVE_TOKEN'
+
+export const ADD_USER = 'ADD_USER'
+export const REMOVE_USER = 'REMOVE_USER'
