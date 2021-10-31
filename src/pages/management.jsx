@@ -17,9 +17,9 @@ function Management() {
   }, [page])
 
   const spreadUrlItems = () => {
-    if(management.data.length){
+    if(management.data.length) {
       return management.data.map(i => {
-        return <ShortenUrlItem key={i} {...i} />
+        return <ShortenUrlItem key={i.shorten_url} urlObject={i} />
       })
     }
     return (

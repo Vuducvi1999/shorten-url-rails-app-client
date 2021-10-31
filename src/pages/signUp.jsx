@@ -54,9 +54,7 @@ function SignUp() {
             <div className='d-flex align-items-center'>
               <button type="submit" className="btn btn-primary">Submit</button>
               {
-                respondSuccess() && <i className="fa fa-check-circle text-success ms-3 fs-3">
-                  <Redirect to="/" />
-                </i>
+                respondSuccess() && <Redirect to="/" />
               }{
                 respondFail() && <span className="ms-3 text-danger">{errorMessage()}</span>
               }

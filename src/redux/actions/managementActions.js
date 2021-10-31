@@ -2,11 +2,14 @@ import axios from "axios"
 import { 
   DELETE_URL_FAIL,
   DELETE_URL_SUCCESS,
+  EDIT_URL_FAIL,
+  EDIT_URL_SUCCESS,
   FETCHING_URL,
   FETCH_URL_LINKS_FAIL, 
   FETCH_URL_LINKS_SUCCESS,
 } from "../constants/managementConstants"
 import {root_server} from '../../constants'
+import { getAliasFromShortenURL } from "../../lib/managementLib"
 
 export const fetchUrlLinks = (token, page) => async dispatch => {
   dispatch({type: FETCHING_URL})
@@ -38,28 +41,51 @@ export const fetchUrlLinks = (token, page) => async dispatch => {
 }
 
 export const deleteUrlLink = (token, alias) => async dispatch => {
-  try {
-    dispatch({type: FETCHING_URL})
+  dispatch({type: FETCHING_URL})
 
-  const data = await axios.delete(`${root_server}/destroy/${alias}`,{
+  const res = await axios.delete(`${root_server}/destroy/${alias}`,{
     headers: {
       Authorization: `Bearer ${token}`
     }
   })
 
-  if(data.data.data){
+  if(res.data.data){
     dispatch({
       type: DELETE_URL_SUCCESS,
       payload: alias
     })
   }
-  if(data.data.errors){
+  if(res.data.errors){
     dispatch({
       type: DELETE_URL_FAIL,
-      payload: data.data.errors
+      payload: res.data.errors
     })
   }
-  } catch (error) {
-    console.log(error)
+}
+
+export const editUrlLink = (token, urlObject) => async dispatch => {
+  dispatch({type: FETCHING_URL})
+  
+  const alias = getAliasFromShortenURL(urlObject.shorten_url)
+  const res = await axios.patch(`${root_server}/edit/${alias}`,{
+      origin_changed: urlObject.origin_changed
+    }, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+
+  if(res.data.data) {
+    const {origin_changed, ...changedUrlObject} = urlObject
+    dispatch({
+      type: EDIT_URL_SUCCESS,
+      payload: changedUrlObject
+    })
+  }
+  if(res.data.errors){
+    dispatch({
+      type: EDIT_URL_FAIL,
+      payload: res.data.errors
+    })
   }
 }
