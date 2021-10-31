@@ -42,7 +42,7 @@ function ShortenUrlItem({origin_url, shorten_url, clicked, created_at, updated_a
     dispatch(deleteUrlLink(authentication.token, alias))
   }
   const convertUrlReadable = value => {
-    if(value.length > 60)
+    if(value?.length > 60)
       return value.slice(0, 60) + '...'
     return value
   }
