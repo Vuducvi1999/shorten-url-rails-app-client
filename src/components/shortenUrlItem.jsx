@@ -89,7 +89,7 @@ function ShortenUrlItem({urlObject}) {
                   nếu đang requesting vẫn bật form
                   nếu management đã requesting và fetch fail thì đóng form 
                */}
-              { editable || management.requesting || (!management.requesting && !management.fetchSuccess) ?
+              { editable ?
                 <td>
                   <form onSubmit={editUrl}>
                     <div className="input-group">
